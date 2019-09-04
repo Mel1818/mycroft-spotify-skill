@@ -140,7 +140,7 @@ class SpotifySkill(CommonPlaySkill):
         self.librespot_starting = True
         path = self.settings.get('librespot_path', None)
         if not path:
-            path = 'home/librespot/'
+            path = '/home/librespot/'
 
         if (path and self.device_name and
                 'user' in self.settings and 'password' in self.settings):
