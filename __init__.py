@@ -59,7 +59,7 @@ class SpotifyNotAuthorizedError(Exception):
 
 
 # Platforms for which the skill should start the spotify player
-MANAGED_PLATFORMS = ['mycroft_mark_1', 'mycroft_mark_2pi']
+MANAGED_PLATFORMS = ['mycroft_mark_1', 'mycroft_mark_2pi', 'unknown']
 # Return value definition indication nothing was found
 # (confidence None, data None)
 NOTHING_FOUND = (None, None)
@@ -139,8 +139,6 @@ class SpotifySkill(CommonPlaySkill):
         """
         self.librespot_starting = True
         path = self.settings.get('librespot_path', None)
-        if self.platform in MANAGED_PLATFORMS and not path:
-            path = 'librespot'
 
         if (path and self.device_name and
                 'user' in self.settings and 'password' in self.settings):
@@ -184,8 +182,7 @@ class SpotifySkill(CommonPlaySkill):
         self.schedule_repeating_event(self.on_websettings_changed,
                                       None, 5*60,
                                       name='SpotifyLogin')
-        if self.platform in MANAGED_PLATFORMS:
-            update_librespot()
+        update_librespot()
         self.on_websettings_changed()
 
     def on_websettings_changed(self):
